@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Task extends Model
 {
@@ -14,12 +17,17 @@ class Task extends Model
         'due_date',
     ];
 
-    public function user()
+    protected $casts = [
+        'status'    => TaskStatus::class,
+        'due_date'  => 'date',
+    ];
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function histories()
+    public function histories(): HasMany
     {
         return $this->hasMany(TaskHistory::class);
     }

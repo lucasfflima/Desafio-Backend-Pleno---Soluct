@@ -5,32 +5,39 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskHistoryResource;
 use App\Models\TaskHistory;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskHistoryController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $query = TaskHistory::query();
+        $query = TaskHistory::with(['task', 'user'])
+            ->whereHas('task', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
 
-        //  Filtros
-        if ($request->has('task_id')) {
-            $query->where('task_id', $request->task_id);
+        if ($request->filled('task_id')) {
+            $query->where('task_id', $request->input('task_id'));
         }
 
-        if ($request->has('user_id')) {
-            $query->where('user_id', $request->user_id);
+        if ($request->filled('field')) {
+            $query->where('field_changed', $request->input('field'));
         }
 
-        if ($request->has(['from', 'to'])) {
-            $query->whereBetween('changed_at', [$request->from, $request->to]);
+        if ($request->filled('date_start')) {
+            $query->whereDate('changed_at', '>=', $request->input('date_start'));
         }
 
-        $histories = $query
-            ->with(['user:id,name,email', 'task:id,title'])
-            ->orderByDesc('changed_at')
-            ->paginate($request->get('per_page', 15));
+        if ($request->filled('date_end')) {
+            $query->whereDate('changed_at', '<=', $request->input('date_end'));
+        }
+
+        $sort = $request->input('sort', 'changed_at');
+        $direction = $request->input('direction', 'desc');
+
+        $histories = $query->orderBy($sort, $direction)->paginate(10);
 
         return response()->json(TaskHistoryResource::collection($histories));
     }
