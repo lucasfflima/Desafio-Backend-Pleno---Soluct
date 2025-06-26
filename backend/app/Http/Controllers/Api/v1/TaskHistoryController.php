@@ -11,16 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskHistoryController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, Task $task): JsonResponse
     {
-        $query = TaskHistory::with(['task', 'user'])
-            ->whereHas('task', function ($q) {
-                $q->where('user_id', Auth::id());
-            });
+        $this->authorize('view', $task); // segurança na faixa
 
-        if ($request->filled('task_id')) {
-            $query->where('task_id', $request->input('task_id'));
-        }
+        $query = $task->histories()->with('user');
 
         if ($request->filled('field')) {
             $query->where('field_changed', $request->input('field'));
@@ -39,6 +34,6 @@ class TaskHistoryController extends Controller
 
         $histories = $query->orderBy($sort, $direction)->paginate(10);
 
-        return response()->json(TaskHistoryResource::collection($histories));
+        return TaskHistoryResource::collection($histories)->response();
     }
 }
