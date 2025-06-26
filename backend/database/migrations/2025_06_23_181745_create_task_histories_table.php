@@ -8,16 +8,13 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('task_histories', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->unsignedBigInteger('task_id'); // FK → tasks
-            $table->unsignedBigInteger('user_id'); // FK → users
+            $table->id();
+            $table->foreignId('task_id')->constrained('tasks')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('field_changed');
             $table->text('old_value')->nullable();
             $table->text('new_value')->nullable();
-            $table->timestamp('changed_at')->useCurrent();
-
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamp('changed_at')->default(now());
         });
     }
 
