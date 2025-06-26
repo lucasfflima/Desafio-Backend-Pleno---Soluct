@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\TaskStatus;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -16,7 +18,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status'      => 'required|in:pending,in_progress,completed,canceled',
+            'status'      => ['required', Rule::in(TaskStatus::values())],
             'due_date'    => 'nullable|date|after_or_equal:today',
         ];
     }
