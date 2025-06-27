@@ -56,6 +56,7 @@ cd desafio-backend-soluct
 ### 2. Rodar com Docker
 
 ```bash
+cd backend
 cp .env.example .env
 docker-compose up -d
 docker exec -it soluct-app composer install
