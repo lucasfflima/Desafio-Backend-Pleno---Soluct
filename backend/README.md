@@ -58,9 +58,9 @@ cd desafio-backend-soluct
 ```bash
 cp .env.example .env
 docker-compose up -d
-docker exec -it app composer install
-docker exec -it app php artisan key:generate
-docker exec -it app php artisan migrate
+docker exec -it soluct-app composer install
+docker exec -it soluct-app php artisan key:generate
+docker exec -it soluct-app php artisan migrate --seed
 ```
 
 ### 3. Testar API com Postman
@@ -81,7 +81,7 @@ php artisan test
 ## 🧪 Cobertura de Testes
 
 - ✅ AuthController (Register, Login, Logout, Me)
-- ✅ TaskController (CRUD, filtros, políticas)
+- ✅ TaskController (CRUD, filtros)
 - ✅ TaskHistoryController (filtros, acesso)
 - ✅ Policies (view, update, delete)
 - ✅ Services (alterações com histórico)
