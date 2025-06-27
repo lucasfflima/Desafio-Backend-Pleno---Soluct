@@ -1,61 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Desafio Backend Pleno - Soluct
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é uma API RESTful desenvolvida com Laravel 11 e PostgreSQL, utilizando autenticação via Laravel Sanctum.
+A aplicação é dockerizada e segue uma estrutura modularizada, com separação por features e versionamento da API.
 
-## About Laravel
+## 🧰 Tecnologias Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.3+
+- Laravel 11
+- Laravel Sanctum
+- PostgreSQL
+- Docker + Docker Compose
+- PHPUnit (testes)
+- Postman (documentação e testes manuais)
+- Estrutura modular por feature (`Auth`, `Task`, `TaskHistory`)
+- Versionamento de API (v1)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🔧 Requisitos Funcionais
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ✅ Autenticação (Register, Login, Me, Logout)
+- ✅ CRUD completo de Tarefas
+- ✅ Histórico de alterações de Tarefas
+- ✅ Filtros, paginação e ordenação de tarefas e históricos
+- ✅ Cada usuário só acessa suas próprias tarefas e históricos
+- ✅ Testes automatizados por feature
+- ✅ Documentação Postman com variáveis de ambiente
 
-## Learning Laravel
+## 📁 Estrutura do Projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+app/
+├── Http/
+│   ├── Controllers/Api/v1/
+│   ├── Requests/Api/v1/
+│   └── Resources/
+├── Models/
+├── Policies/
+├── Services/
+routes/
+└── api.php
+tests/
+└── Feature/Api/v1/
+    ├── Auth/
+    └── Task/
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ▶️ Instruções para Executar
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clonar o Repositório
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/seu-usuario/desafio-backend-soluct.git
+cd desafio-backend-soluct
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Rodar com Docker
 
-### Premium Partners
+```bash
+cp .env.example .env
+docker-compose up -d
+docker exec -it app composer install
+docker exec -it app php artisan key:generate
+docker exec -it app php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 3. Testar API com Postman
 
-## Contributing
+Importe o arquivo `soluct-collection.json` no Postman.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Ambiente:**
 
-## Code of Conduct
+- Base URL: `http://localhost/api/v1`
+- Variáveis de ambiente estão no próprio JSON da coleção.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Rodar Testes Automatizados
 
-## Security Vulnerabilities
+```bash
+php artisan test
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🧪 Cobertura de Testes
 
-## License
+- ✅ AuthController (Register, Login, Logout, Me)
+- ✅ TaskController (CRUD, filtros, políticas)
+- ✅ TaskHistoryController (filtros, acesso)
+- ✅ Policies (view, update, delete)
+- ✅ Services (alterações com histórico)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🔐 Regras de Acesso
+
+- Cada usuário só acessa e altera suas próprias tarefas e históricos.
+- TaskPolicy controla as permissões.
+- Toda rota protegida está sob `auth:sanctum`.
+
+## 📌 Documentação e Coleção Postman
+
+- Arquivo único: `soluct-collection.json`
+- Contém requests e variáveis (`{{base_url}}`, `{{auth_token}}` etc.)
+
+## 📌 Variáveis da API
+
+| Nome          | Tipo   | Descrição                         |
+|---------------|--------|-----------------------------------|
+| `title`       | string | Título da tarefa                  |
+| `description` | string | Descrição opcional                |
+| `status`      | enum   | `pending`, `in_progress`, `completed`, `canceled` |
+| `due_date`    | date   | Data de vencimento (opcional)     |
+
+## 🔥 Exemplos de Filtros
+
+### Tarefas (`GET /tasks`)
+- `?status=completed`
+- `?title=relatório`
+- `?date_start=2024-01-01&date_end=2024-01-31`
+- `?due_start=2024-01-01&due_end=2024-01-10`
+- `?sort=title&direction=asc`
+
+### Históricos (`GET /tasks/{task}/history`)
+- `?field=status`
+- `?date_start=2024-01-01`
+
+---
+
+## 🧑‍💻 Autor
+
+**Lucas Felipe Freitas Lima**  
+
+---

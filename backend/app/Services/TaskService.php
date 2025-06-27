@@ -18,7 +18,7 @@ class TaskService
         }
 
         if (!empty($filters['title'])) {
-            $query->where('title', 'ILIKE', '%' . $filters['title'] . '%');
+            $query->where('title', 'LIKE', '%' . $filters['title'] . '%');
         }
 
         if (!empty($filters['date_start'])) {

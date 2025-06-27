@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Task;
 use App\Models\TaskHistory;
+use App\Enums\TaskStatus;
 use Illuminate\Support\Facades\Auth;
 
 class TaskObserver
@@ -20,11 +21,24 @@ class TaskObserver
                     'task_id'       => $task->id,
                     'user_id'       => Auth::id(),
                     'field_changed' => $field,
-                    'old_value'     => is_null($oldValue) ? null : (string) $oldValue,
-                    'new_value'     => is_null($newValue) ? null : (string) $newValue,
+                    'old_value'     => $this->convertValueToString($oldValue),
+                    'new_value'     => $this->convertValueToString($newValue),
                     'changed_at'    => now(),
                 ]);
             }
         }
+    }
+
+    private function convertValueToString($value): ?string
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        if ($value instanceof TaskStatus) {
+            return $value->value;
+        }
+
+        return (string) $value;
     }
 }

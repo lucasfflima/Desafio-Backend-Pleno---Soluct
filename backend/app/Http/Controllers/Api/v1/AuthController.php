@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\RegisterRequest;
 use App\Http\Requests\Api\v1\LoginRequest;
 use App\Http\Resources\Api\v1\UserResource;
@@ -25,12 +26,18 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): JsonResponse
     {
-        $token = $this->authService->login($request->validated());
+        try {
+            $token = $this->authService->login($request->validated());
 
-        return response()->json([
-            'message' => 'Login realizado com sucesso.',
-            'token'   => $token,
-        ]);
+            return response()->json([
+                'message' => 'Login realizado com sucesso.',
+                'token'   => $token,
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Credenciais inválidas'
+            ], 401);
+        }
     }
 
     public function logout(): JsonResponse
