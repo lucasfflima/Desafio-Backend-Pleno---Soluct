@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TaskHistoryResource;
+use App\Http\Resources\Api\v1\TaskHistoryResource;
+use App\Models\Task;
 use App\Models\TaskHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

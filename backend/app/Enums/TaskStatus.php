@@ -13,4 +13,14 @@ enum TaskStatus: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    public static function labels(): array
+    {
+        return [
+            self::PENDING->value => 'Pendente',
+            self::IN_PROGRESS->value => 'Em Andamento',
+            self::COMPLETED->value => 'Concluída',
+            self::CANCELED->value => 'Cancelada',
+        ];
+    }
 }
