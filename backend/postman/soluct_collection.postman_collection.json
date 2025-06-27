@@ -27,16 +27,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
             ],
-            "url": {
-              "raw": "{{base_url}}/register",
-              "host": ["{{base_url}}"],
-              "path": ["register"]
-            },
+            "url": { "raw": "{{base_url}}/register", "host": ["{{base_url}}"], "path": ["register"] },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Teste User\",\n  \"email\": \"teste@soluct.com\",\n  \"password\": \"123456\",\n  \"password_confirmation\": \"123456\"\n}"
@@ -49,16 +43,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": ["{{base_url}}"],
-              "path": ["login"]
-            },
+            "url": { "raw": "{{base_url}}/login", "host": ["{{base_url}}"], "path": ["login"] },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"teste@soluct.com\",\n  \"password\": \"123456\"\n}"
@@ -88,17 +76,10 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Accept", "value": "application/json" }
             ],
-            "url": {
-              "raw": "{{base_url}}/me",
-              "host": ["{{base_url}}"],
-              "path": ["me"]
-            }
+            "url": { "raw": "{{base_url}}/me", "host": ["{{base_url}}"], "path": ["me"] }
           },
           "response": [],
           "event": [
@@ -119,17 +100,10 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Accept", "value": "application/json" }
             ],
-            "url": {
-              "raw": "{{base_url}}/logout",
-              "host": ["{{base_url}}"],
-              "path": ["logout"]
-            }
+            "url": { "raw": "{{base_url}}/logout", "host": ["{{base_url}}"], "path": ["logout"] }
           },
           "response": [],
           "event": [
@@ -155,18 +129,15 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Accept", "value": "application/json" }
             ],
             "url": {
-              "raw": "{{base_url}}/tasks?status=pending&sort=due_date&direction=asc",
+              "raw": "{{base_url}}/tasks?status=pendente&sort=due_date&direction=asc",
               "host": ["{{base_url}}"],
               "path": ["tasks"],
               "query": [
-                { "key": "status", "value": "pending" },
+                { "key": "status", "value": "pendente" },
                 { "key": "sort", "value": "due_date" },
                 { "key": "direction", "value": "asc" }
               ]
@@ -191,24 +162,14 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Accept", "value": "application/json" }
             ],
-            "url": {
-              "raw": "{{base_url}}/tasks",
-              "host": ["{{base_url}}"],
-              "path": ["tasks"]
-            },
+            "url": { "raw": "{{base_url}}/tasks", "host": ["{{base_url}}"], "path": ["tasks"] },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Minha tarefa\",\n  \"description\": \"Descrição da tarefa\",\n  \"status\": \"pending\",\n  \"due_date\": \"2025-07-30\"\n}"
+              "raw": "{\n  \"title\": \"Minha tarefa\",\n  \"description\": \"Descrição da tarefa\",\n  \"status\": \"pendente\",\n  \"due_date\": \"2025-07-30\"\n}"
             }
           },
           "response": [],
@@ -236,16 +197,13 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "type": "text"
-              }
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Accept", "value": "application/json" }
             ],
             "url": {
-              "raw": "{{base_url}}/task-histories",
+              "raw": "{{base_url}}/tasks/1/history",
               "host": ["{{base_url}}"],
-              "path": ["task-histories"]
+              "path": ["tasks", "1", "history"]
             }
           },
           "response": [],

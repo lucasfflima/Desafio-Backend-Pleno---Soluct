@@ -17,6 +17,7 @@ class TaskController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $this->authorize('viewAny', Task::class);
         $tasks = $this->taskService->list($request->all());
 
         return response()->json([
@@ -26,6 +27,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request): JsonResponse
     {
+        $this->authorize('create', Task::class);
         $task = $this->taskService->create($request->validated());
 
         return response()->json([
