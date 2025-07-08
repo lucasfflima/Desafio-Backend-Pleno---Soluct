@@ -1,4 +1,4 @@
-# Desafio Backend Pleno - Soluct
+# Desafio Backend
 
 Este projeto é uma API RESTful desenvolvida com Laravel 11 e PostgreSQL, utilizando autenticação via Laravel Sanctum.
 A aplicação é dockerizada e segue uma estrutura modularizada, com separação por features e versionamento da API.
@@ -49,8 +49,8 @@ tests/
 ### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/desafio-backend-soluct.git
-cd desafio-backend-soluct
+git clone https://github.com/lucasfflima/desafio-backend.git
+cd desafio-backend
 ```
 
 ### 2. Rodar com Docker
